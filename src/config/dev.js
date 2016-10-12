@@ -1,3 +1,4 @@
 export default {
-  port: 3030
+  port: 3030,
+  staticFolder: './static'
 }
