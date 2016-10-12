@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "babel-cli": "^6.16.0",
+    "babel-polyfill": "^6.16.0",
     "babel-preset-latest": "^6.16.0",
     "babel-register": "^6.16.3",
     "nodemon": "^1.11.0"

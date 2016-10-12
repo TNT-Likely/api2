@@ -1,0 +1,13 @@
+{
+  "identity": "pet",
+  "connection": "default",
+  "attributes": {
+    "breed": "string",
+    "type": "string",
+    "name": "string",
+
+    "owner": {
+      "model": "user"
+    }
+  }
+}

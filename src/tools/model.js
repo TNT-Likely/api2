@@ -3,7 +3,7 @@ import jsonfile from 'jsonfile'
 import path from 'path'
 import fs from 'fs'
 
-export default () => {
+export default function() {
   return new Promise((resolve, reject) => {
     let models = []
     fs.readdir(config.modelsFolder, (err, files) => {

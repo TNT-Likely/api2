@@ -4,7 +4,7 @@ import path from 'path'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import config from './config'
-import { datasource } from './middleware'
+import { db } from './middleware'
 
 const app = express()
 
