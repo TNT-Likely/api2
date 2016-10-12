@@ -1,3 +1,4 @@
-import config from process.env.NODE_ENV == 'production' ? './prod' : './dev'
+import cDev from './dev'
+import cProd from './prod'
 
-export default config
+export default process.env.NODE_ENV == 'production' ? cProd : cDev
