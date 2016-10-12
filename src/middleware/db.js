@@ -15,59 +15,26 @@ async function init() {
   })
 
   // Set up the storage configuration for waterline.
-  let config = {
+  let dbConfig = {
     adapters: {
       'memory': sailsMemoryAdapter
     },
 
     connections: {
-      default: {
+      default: Object.assign({
         adapter: 'memory'
-      }
+      }, config.db)
     }
-  };
+  }
 
   // Initialise the waterline instance.
-  waterline.initialize(config, function(err, ontology) {
+  waterline.initialize(dbConfig, function(err, ontology) {
     if (err) {
-      return console.error(err);
+      return console.log(`err`.red);
     }
 
-    // Tease out fully initialised models.
-    var User = ontology.collections.user;
-    var Pet = ontology.collections.pet;
-
-    // First we create a user.
-    User.create({
-        firstName: 'Neil',
-        lastName: 'Armstrong'
-      })
-      .then(function(user) {
-        // Then we can create a pet for the user.
-        // Note that waterline automatically adds the `id` primary key to the model.
-        Pet.create({
-            breed: 'beagle',
-            type: 'dog',
-            name: 'Astro',
-            owner: user.id
-          })
-          .then(function(pet) {
-            // Then we can associate the pet with the user.
-            user.pets = [pet];
-
-            // And save the user.
-            return user.save();
-          })
-          .then(function() {
-            // And now we want to get the new user back,
-            // and populate the pets the user might own.
-            return User.find()
-              .populate('pets');
-          })
-          .then(console.log)
-          .catch(console.error);
-      });
-  });
+    console.log(`database init at ${config.db.host}:${config.db.port}/${config.db.database} success`.blue)
+  })
 }
 
 
