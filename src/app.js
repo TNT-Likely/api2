@@ -4,6 +4,7 @@ import path from 'path'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import config from './config'
+import { datasource } from './middleware'
 
 const app = express()
 
@@ -14,7 +15,7 @@ app.use(bodyParser())
 app.use(cookieParser())
 
 //server static file
-app.use('/static', express.static(path.join(__dirname, config.staticFolder)))
+app.use('/static', express.static(config.staticFolder))
 
 //start server
 app.listen(config.port, () => {
