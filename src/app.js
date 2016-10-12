@@ -20,7 +20,7 @@ app.use('/static', express.static(config.staticFolder))
 //init database
 models.waterline.initialize(models.config, function(err, models) {
   if (err) throw err
-
+ 
   app.models = models.collections
   app.connections = models.connections
 

@@ -24,7 +24,6 @@ fs
   })
   .forEach(function(file) {
     let model = require(path.join(config.modelsFolder, file)).default
-    console.log(model)
     orm.loadCollection(Waterline.Collection.extend(model))
   });
 
