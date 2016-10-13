@@ -3,9 +3,20 @@ import color from 'colors'
 import path from 'path'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
+import mongoose from 'mongoose'
 import config from './config'
 import models from './models'
 import { restRouter } from './routes'
+
+mongoose.connect(config.mongo.url)
+mongoose.connection.on('error', function(err) {
+  console.error('MongoDB connection error: ' + err)
+  process.exit(-1);
+})
+
+models['user'].create({ username: 'xxx' }, (err, result) => {
+  console.log(err, result)
+})
 
 const app = express()
 
@@ -18,19 +29,10 @@ app.use(cookieParser())
 //server static file
 app.use('/static', express.static(config.staticFolder))
 
-//init database
-models.waterline.initialize(models.config, function(err, models) {
-  if (err) throw err
-
-  app.models = models.collections
-  app.connections = models.connections
-
-  app.use(`/${config.restEndpoint}`, restRouter(app))
-
-  //start server
-  app.listen(config.port, () => {
-    console.log(`start server at port ${config.port} success`.blue)
-  })
+//start server
+app.listen(config.port, () => {
+  console.log(`start server at port ${config.port} success`.blue)
 })
+
 
 export default app

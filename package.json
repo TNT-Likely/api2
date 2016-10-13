@@ -10,16 +10,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "babel-cli": "^6.16.0",
     "body-parser": "^1.15.2",
     "colors": "^1.1.2",
     "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
-    "jsonfile": "^2.4.0",
-    "sails-mongo": "^0.12.1",
-    "waterline": "^0.11.4"
+    "mongoose": "^4.6.3"
   },
   "devDependencies": {
+    "babel-cli": "^6.16.0",
     "babel-polyfill": "^6.16.0",
     "babel-preset-latest": "^6.16.0",
     "babel-register": "^6.16.3",

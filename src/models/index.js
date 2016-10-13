@@ -1,21 +1,8 @@
 import fs from 'fs'
 import path from 'path'
-import sailsMongoAdapter from 'sails-mongo'
-import Waterline from 'waterline'
 import config from '../config'
 
-let orm = new Waterline()
-
-let waterlineConfig = {
-  adapters: {
-    'mongo': sailsMongoAdapter
-  },
-  connections: {
-    default: Object.assign({
-      adapter: 'mongo'
-    }, config.db)
-  }
-}
+let models = []
 
 fs
   .readdirSync(config.modelsFolder)
@@ -24,7 +11,8 @@ fs
   })
   .forEach(function(file) {
     let model = require(path.join(config.modelsFolder, file)).default
-    orm.loadCollection(Waterline.Collection.extend(model))
-  });
-
-export default { waterline: orm, config: waterlineConfig }
+    let modelName = file.toString().split('.')[0]
+    models[modelName] = model
+  })
+console.log(models)
+export default models

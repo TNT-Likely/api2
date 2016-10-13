@@ -1,15 +1,11 @@
-export default {
-  identity: 'user',
-  connection: 'default',
-  attributes: {
-    firstName: 'string',
-    lastName: 'string',
+import mongoose from 'mongoose'
 
-    // Add a reference to Pets
-    pets: {
-      collection: 'pet',
-      via: 'owner'
-    }
-  },
-  migrate: 'safe'
-}
+export default mongoose.model('user', {
+  username: String,
+  password: String,
+  email: String,
+  emailVerified: Boolean,
+  created: String,
+  modified: String,
+  avatar: String
+})
