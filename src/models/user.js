@@ -10,5 +10,6 @@ export default {
       collection: 'pet',
       via: 'owner'
     }
-  }
+  },
+  migrate: 'safe'
 }

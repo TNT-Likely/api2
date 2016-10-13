@@ -10,5 +10,6 @@ export default {
     owner: {
       model: 'user'
     }
-  }
+  },
+  migrate: 'safe'
 }
