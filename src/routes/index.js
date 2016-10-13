@@ -1,0 +1,2 @@
+export { restRouter }
+from './rest'
