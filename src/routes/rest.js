@@ -1,4 +1,5 @@
 import express from 'express'
+import models from '../models'
 
 let handler = (promise, res) => {
   promise.exec((err, result) => {
@@ -12,7 +13,7 @@ export let restRouter = (app) => {
   let model = null
 
   router.use('/:model', (req, res, next) => {
-    model = app.models[req.params.model]
+    model = models[req.params.model]
     if (!model) res.status(404).send(`model ${req.params.model} not exists!`)
     else {
       next()

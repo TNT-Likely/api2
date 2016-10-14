@@ -14,7 +14,7 @@ mongoose.connection.on('error', function(err) {
   process.exit(-1);
 })
 
-models['user'].create({ username: 'xxx' }, (err, result) => {
+models['user'].create({ username: 'xxx', password: 'sunxiao=195721..', email: 'aa.cc@youths.cc', phone: '1' }, (err, result) => {
   console.log(err, result)
 })
 
@@ -28,6 +28,9 @@ app.use(cookieParser())
 
 //server static file
 app.use('/static', express.static(config.staticFolder))
+
+//rest router
+app.use(`/${config.restEndpoint}`, restRouter())
 
 //start server
 app.listen(config.port, () => {

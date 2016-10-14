@@ -14,5 +14,5 @@ fs
     let modelName = file.toString().split('.')[0]
     models[modelName] = model
   })
-console.log(models)
+  
 export default models
