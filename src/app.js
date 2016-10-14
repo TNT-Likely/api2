@@ -9,12 +9,14 @@ import models from './models'
 import { restRouter } from './routes'
 
 mongoose.connect(config.mongo.url)
+mongoose.Promise = global.Promise
+// mongoose.plugin(require('mongoose-unique-validator'))
 mongoose.connection.on('error', function(err) {
   console.error('MongoDB connection error: ' + err)
   process.exit(-1);
 })
 
-models['user'].create({ username: 'xxx', password: 'sunxiao=195721..', email: 'aa.cc@youths.cc', phone: '1' }, (err, result) => {
+models['user'].create({ username: 'xxx', password: 'sunxiao=195721..', email: 'aa.cc@youths.cc', phone: '12222' }, (err, result) => {
   console.log(err, result)
 })
 

@@ -1,16 +1,13 @@
 import express from 'express'
-import models from '../models'
-
-let handler = (promise, res) => {
-  promise.exec((err, result) => {
-    if (err) res.json(err)
-    else res.json(result)
-  })
-}
+import models from '../../models'
+import { handler } from '../../tools'
 
 export let restRouter = (app) => {
   let router = express.Router()
   let model = null
+
+  //user路由
+  require('./user')(router)
 
   router.use('/:model', (req, res, next) => {
     model = models[req.params.model]

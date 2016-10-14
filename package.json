@@ -10,13 +10,19 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^0.8.7",
     "body-parser": "^1.15.2",
     "colors": "^1.1.2",
     "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
-    "mongoose": "^4.6.3"
+    "install": "^0.8.1",
+    "mongoose": "^4.6.3",
+    "mongoose-unique-validator": "^1.0.2",
+    "nodemailer": "^2.6.4",
+    "uuid": "^2.0.3"
   },
   "devDependencies": {
+    "babel-plugin-add-module-exports": "^0.2.1",
     "babel-cli": "^6.16.0",
     "babel-polyfill": "^6.16.0",
     "babel-preset-latest": "^6.16.0",
