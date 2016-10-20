@@ -10,15 +10,15 @@ export default (r) => {
             result.verifyToken = uid()
             result.save().then(r => {
                 emailsender.verify(r.email, r.verifyToken).then(result => {
-                    res.json({ code: 0, msg: null, data: r })
+                    handler(res, r)
                 }).catch((err) => {
-                    res.json({ code: 4000, msg: err, data: null })
+                    handler(res, err, 4000)
                 })
             }).catch(err => {
-                res.json({ code: 4001, msg: err, data: null })
+                handler(res, err, 4001)
             })
         }).catch(err => {
-            res.json({ code: 4002, msg: err, data: null })
+            handler(res, err, 4002)
         })
     })
 
@@ -26,19 +26,21 @@ export default (r) => {
         let nameOrEmail = req.body.nameOrEmail
         let password = req.body.password
         model.findOne().or([{ username: nameOrEmail }, { email: nameOrEmail }]).then((r) => {
-            if (!r) res.json({ code: 4003, msg: '用户不存在', data: null })
+            if (!r) handler(res, '用户不存在', 4003)
             if (!r.emailVerified) {
-                res.json({ code: 4004, msg: '邮箱未激活', data: null })
+                handler(res, '邮箱未激活', 4004)
             } else if (bcrypt.compareSync(password, r.password)) {
                 cookieModel.create({ uid: r.id }).then(rs => {
                     r._doc.accessToken = rs.accessToken
-                    res.json({ code: 0, msg: null, data: r._doc })
-                }).catch(er => { res.json({ code: 4005, msg: er, data: null }) })
+                    handler(res, r._doc)
+                }).catch(er => {
+                    handler(res, r, 4005)
+                })
             } else {
-                res.json({ code: 4006, msg: '密码错误', data: null })
+                handler(res, '密码错误', 4006)
             }
         }).catch(e => {
-            res.json({ code: 4007, msg: e, data: null })
+            handler(res, e, 4007)
         })
     })
 }
