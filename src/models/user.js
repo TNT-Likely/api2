@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import bcrypt from 'bcryptjs'
+import { uid } from '../tools'
 
 let Schema = new mongoose.Schema({
   username: { type: String, required: true, max: 20, unique: true },
@@ -26,11 +27,30 @@ let Schema = new mongoose.Schema({
   avatar: String
 }, { versionKey: '', timestamps: {} })
 
+//密码存入之前要加密
 Schema.post('save', (m, next) => {
   m.password = bcrypt.hashSync(m.password, 10)
   next()
 })
 
+//登录
+Schema.statics.login = (nameOrEmail, password, next) => {
+  return new Promise((resolve, reject) => {
+    model.findOne().or([{ username: nameOrEmail }, { email: nameOrEmail }]).then((r) => {
+      if (!r) resolve({ msg: '用户不存在' });
+      if (bcrypt.compareSync(password, r.password)) {
+        resolve(r)
+      } else {
+        resolve({ msg: '密码错误' })
+      }
+    }).catch(e => {
+      reject(e)
+    })
+  })
+}
+
 Schema.plugin(require('mongoose-unique-validator'))
 
-export default mongoose.model('user', Schema)
+let model = mongoose.model('user', Schema)
+
+export default model

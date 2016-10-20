@@ -14,5 +14,14 @@ export default {
     database: 'youths',
     user: 'admin',
     password: 'admin'
+  },
+  email: {
+    host: 'smtp.163.com',
+    port: 465,
+    secure: true,
+    auth: {
+      user: 'youthschina@163.com',
+      pass: 'uFS7KIPzmMBfoXk4'
+    }
   }
 }
