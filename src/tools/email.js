@@ -1,10 +1,14 @@
 import nodemailer from 'nodemailer'
 import config from '../config'
+import path from 'path'
+
+let EmailTemplate = require('email-templates').EmailTemplate
 
 class email {
   constructor(serverConfig) {
     this.serverConfig = serverConfig
     this.transporter = nodemailer.createTransport(serverConfig)
+    this.from = `youths网 <${this.serverConfig.auth.user}>`
   }
 
   sendAction(handler) {
@@ -29,16 +33,24 @@ class email {
 
   //163 mail deny email's from field not equal emailserver's user 
   send163(mailConfig) {
-    return this.send(Object.assign(mailConfig, { from: this.serverConfig.auth.user }))
+    return this.send(Object.assign(mailConfig, { from: this.from }))
+  }
+
+  //use template
+  template(templateDir, mailConfig, templateData) {
+    let send = this.transporter.templateSender(new EmailTemplate(path.join(__dirname, templateDir)), {
+      from: this.from
+    })
+
+    return send(mailConfig, templateData)
   }
 
   //注册激活邮件
   verify(email, token) {
-    return this.send163({
-      subject: '激活邮箱',
-      to: email,
-      html: `请点击<a href="${token}">这里</a>验证邮箱`
-    })
+    return this.template('../static/tpl/action', {
+      subject: '请激活您的youths网账号',
+      to: email
+    }, { email: email, token: token })
   }
 }
 

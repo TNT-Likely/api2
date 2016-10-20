@@ -1,5 +1,7 @@
 import mongoose from 'mongoose'
 import bcrypt from 'bcryptjs'
+import { uid } from '../tools'
+import cookieModel from './cookie'
 
 let Schema = new mongoose.Schema({
   username: { type: String, required: true, max: 20, unique: true },
@@ -26,11 +28,35 @@ let Schema = new mongoose.Schema({
   avatar: String
 }, { versionKey: '', timestamps: {} })
 
+//密码存入之前要加密
 Schema.post('save', (m, next) => {
   m.password = bcrypt.hashSync(m.password, 10)
   next()
 })
 
+//登录
+Schema.statics.login = (nameOrEmail, password, next) => {
+  return new Promise((resolve, reject) => {
+    model.findOne().or([{ username: nameOrEmail }, { email: nameOrEmail }]).then((r) => {
+      if (!r) resolve({ msg: '用户不存在' });
+      if (!r.emailVerified) {
+        resolve({ msg: '邮箱未激活' })
+      } else if (bcrypt.compareSync(password, r.password)) {
+        cookieModel.create({ uid: r.id }).then(rs => {
+          r._doc.accessToken = rs.accessToken
+          resolve({ data: r._doc })
+        }).catch(er => { resolve({ msg: '创建access_token失败', err: er }) })
+      } else {
+        resolve({ msg: '密码错误' })
+      }
+    }).catch(e => {
+      reject(e)
+    })
+  })
+}
+
 Schema.plugin(require('mongoose-unique-validator'))
 
-export default mongoose.model('user', Schema)
+let model = mongoose.model('user', Schema)
+
+export default model
