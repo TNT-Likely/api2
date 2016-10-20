@@ -1,7 +1,7 @@
-export let handler = (promise, res) => {
-  promise.then(result => {
-    res.json(result)
-  }).catch(err => {
-    res.status(400).json(err)
-  })
+export let handler = (res, result, code) => {
+    if (!code) {
+        res.json({ code: 0, msg: null, data: result })
+    } else {
+        res.json({ code: code, msg: result, data: null })
+    }
 }
