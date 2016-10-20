@@ -16,12 +16,12 @@ export default {
     password: ''
   },
   email: {
-    host: 'smtp.163.com',
+    host: 'smtp.exmail.qq.com',
     port: 465,
     secure: true,
     auth: {
-      user: 'youthschina@163.com',
-      pass: 'uFS7KIPzmMBfoXk4'
+      user: 'admin@youths.cc',
+      pass: 'SUNxiao195721'
     }
   }
 }
