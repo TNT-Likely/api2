@@ -13,23 +13,23 @@
     "install": "^0.8.1"
   },
   "devDependencies": {
-    "uuid": "^2.0.3",
-    "bcrypt": "^0.8.7",
-    "body-parser": "^1.15.2",
-    "colors": "^1.1.2",
-    "cookie-parser": "^1.4.3",
-    "mongoose": "^4.6.3",
-    "email-templates": "^2.5.2",
-    "express": "^4.14.0",
-    "mongoose-unique-validator": "^1.0.2",
-    "less": "^2.7.1",
-    "nodemailer": "^2.6.4",
-    "swig": "^1.4.2",
-    "babel-plugin-add-module-exports": "^0.2.1",
     "babel-cli": "^6.16.0",
+    "babel-plugin-add-module-exports": "^0.2.1",
     "babel-polyfill": "^6.16.0",
     "babel-preset-latest": "^6.16.0",
     "babel-register": "^6.16.3",
-    "nodemon": "^1.11.0"
+    "bcryptjs": "^2.3.0",
+    "body-parser": "^1.15.2",
+    "colors": "^1.1.2",
+    "cookie-parser": "^1.4.3",
+    "email-templates": "^2.5.2",
+    "express": "^4.14.0",
+    "less": "^2.7.1",
+    "mongoose": "^4.6.3",
+    "mongoose-unique-validator": "^1.0.2",
+    "nodemailer": "^2.6.4",
+    "nodemon": "^1.11.0",
+    "swig": "^1.4.2",
+    "uuid": "^2.0.3"
   }
 }
