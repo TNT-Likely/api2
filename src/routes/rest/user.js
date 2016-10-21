@@ -25,9 +25,27 @@ export default (r) => {
   })
 
   //激活
-  r.post('/user/verify', (req, res) => {
-
+  r.post('/user/verify', check(['uid', 'token']), (req, res) => {
+    model.findOne({ _id: req.body.uid, verifyToken: req.body.token }).then(r => {
+      if (!r) {
+        handler(res, '无效uid或token', 4010)
+      } else {
+        r.emailVerified = true
+        r.verifyToken = undefined
+        r.save().then(re => {
+          handler(res, '激活成功')
+        }).catch(er => {
+          handler(res, '激活失败', 4011)
+        })
+      }
+    }).catch(e => {
+      handler(res, e, 4009)
+    })
   })
+
+  //重置邮件
+
+  //重置密码
 
   //登录
   r.post('/user/login', check(['nameOrEmail', 'password']), (req, res) => {
@@ -39,12 +57,17 @@ export default (r) => {
       if (!r.emailVerified) {
         handler(res, '邮箱未激活', 4004)
       } else if (bcrypt.compareSync(password, r.password)) {
-        cookieModel.create({ uid: r.id }).then(rs => {
-          r._doc.accessToken = rs.accessToken
-          handler(res, r._doc)
-        }).catch(er => {
-          handler(res, er, 4005)
+        cookieModel.findOneAndUpdate({ uid: r.id }, { ttl: 0 }).then(resu => { //旧cookie设置过期
+          cookieModel.create({ uid: r.id }).then(rs => { //生成新cookie
+            r._doc.accessToken = rs.accessToken
+            handler(res, r._doc)
+          }).catch(er => {
+            handler(res, er, 4005)
+          })
+        }).catch(err => {
+          handler(res, err, 4008)
         })
+
       } else {
         handler(res, '密码错误', 4006)
       }
@@ -52,6 +75,8 @@ export default (r) => {
       handler(res, e, 4007)
     })
   })
+
+  //注销
 
   //用户状态
   r.get('/user/status', auth, (req, res) => {
