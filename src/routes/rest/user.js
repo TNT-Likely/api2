@@ -7,7 +7,7 @@ import { auth, check } from '../../middleware'
 export default (r) => {
 
   //注册
-  r.post('/user/register', check(['username', 'password', 'email']), (req, res) => {
+  r.post('/user/register', check(['username', { key: 'password', match: /^\S{6,16}$/ }, 'email']), (req, res) => {
     model.create(req.body).then(result => {
       result.verifyToken = uid()
       result.save().then(r => {
@@ -44,8 +44,38 @@ export default (r) => {
   })
 
   //重置邮件
+  r.post('/user/reset', check(['email']), (req, res) => {
+    let email = req.body.email
+    model.findOne({ email: email }).then(r => {
+      r.resetToken = uid()
+      r.save().then(re => {
+        emailsender.reset({ email: email, token: re.resetToken }).then(res => {
+          handler(res, '激活邮件发送成功')
+        }).catch(err => {
+          handler(res, err, 4014)
+        })
+      }).catch(er => {
+        handler(res, er, 4013)
+      })
+    }).catch(e => {
+      handler(res, e, 4012)
+    })
+  })
 
   //重置密码
+  r.post('/user/resetpassword', check(['uid', 'token', 'password']), (req, res) => {
+    model.findOne({ resetToken: req.body.token }).then(r => {
+      if (!r) {
+        handler(res, 'token不存在', 4016)
+      } else if (r.id != req.body.uid) {
+        handler(res, 'token无效', 4017)
+      } else {
+
+      }
+    }).catch(e => {
+      handler(res, e, 4015)
+    })
+  })
 
   //登录
   r.post('/user/login', check(['nameOrEmail', 'password']), (req, res) => {
