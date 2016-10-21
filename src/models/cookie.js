@@ -3,15 +3,10 @@ import bcrypt from 'bcryptjs'
 import { uid } from '../tools'
 
 let Schema = new mongoose.Schema({
-  uid: { type: String, required: true },
+  uid: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'user' },
   ttl: { type: Number, default: 604800000 },
-  accessToken: { type: String, unique: true },
+  accessToken: { type: String, default: uid, unique: true },
 }, { versionKey: '', timestamps: {} })
-
-Schema.post('save', (m, next) => {
-  m.accessToken = uid()
-  next()
-})
 
 Schema.plugin(require('mongoose-unique-validator'))
 
