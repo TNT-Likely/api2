@@ -2,12 +2,13 @@ let model = require('../../models')['user']
 let cookieModel = require('../../models')['cookie']
 import bcrypt from 'bcryptjs'
 import { handler, uid, emailsender } from '../../tools'
-import { auth } from '../../middleware'
+import { auth, check } from '../../middleware'
 
 export default (r) => {
-  r.post('/user/register', (req, res) => {
-    let body = req.body
-    model.create(body).then(result => {
+
+  //注册
+  r.post('/user/register', check(['username', 'password', 'email']), (req, res) => {
+    model.create(req.body).then(result => {
       result.verifyToken = uid()
       result.save().then(r => {
         emailsender.verify(r.email, r.verifyToken).then(result => {
@@ -23,10 +24,17 @@ export default (r) => {
     })
   })
 
-  r.post('/user/login', (req, res) => {
+  //激活
+  r.post('/user/verify', (req, res) => {
+
+  })
+
+  //登录
+  r.post('/user/login', check(['nameOrEmail', 'password']), (req, res) => {
     let nameOrEmail = req.body.nameOrEmail
     let password = req.body.password
-    model.findOne().or([{ username: nameOrEmail }, { email: nameOrEmail }]).then((r) => {
+
+    model.findOne().or([{ username: nameOrEmail }, { email: nameOrEmail }]).then(r => {
       if (!r) handler(res, '用户不存在', 4003)
       if (!r.emailVerified) {
         handler(res, '邮箱未激活', 4004)
@@ -45,6 +53,7 @@ export default (r) => {
     })
   })
 
+  //用户状态
   r.get('/user/status', auth, (req, res) => {
     handler(res, req.user)
   })
