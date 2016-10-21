@@ -2,8 +2,6 @@ import fs from 'fs'
 import path from 'path'
 import config from '../config'
 
-let models = []
-
 fs
   .readdirSync(config.modelsFolder)
   .filter(function(file) {
@@ -12,7 +10,5 @@ fs
   .forEach(function(file) {
     let model = require(path.join(config.modelsFolder, file))
     let modelName = file.toString().split('.')[0]
-    models[modelName] = model
+    module.exports[modelName] = model
   })
-  
-export default models

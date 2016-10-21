@@ -47,8 +47,16 @@ class email {
 
   //注册激活邮件
   verify(email, token) {
-    return this.template('../static/tpl/action', {
+    return this.template('../static/tpl/verify', {
       subject: '请激活您的youths网账号',
+      to: email
+    }, { email: email, token: token })
+  }
+
+  //重置密码邮件
+  reset(email, token) {
+    return this.template('../static/tpl/reset', {
+      subject: 'youths网重置密码',
       to: email
     }, { email: email, token: token })
   }
