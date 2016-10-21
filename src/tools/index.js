@@ -9,3 +9,7 @@ from './uid'
 //邮件发送
 export { emailsender }
 from './email'
+
+//正则表达式
+export { regex }
+from './regex'

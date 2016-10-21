@@ -1,13 +1,13 @@
 let model = require('../../models')['user']
 let cookieModel = require('../../models')['cookie']
 import bcrypt from 'bcryptjs'
-import { handler, uid, emailsender } from '../../tools'
+import { handler, uid, emailsender, regex } from '../../tools'
 import { auth, check } from '../../middleware'
 
 export default (r) => {
 
   //注册
-  r.post('/user/register', check(['username', { key: 'password', match: /^\S{6,16}$/ }, 'email']), (req, res) => {
+  r.post('/user/register', check(['username', { key: 'password', match: regex.phone }, 'email']), (req, res) => {
     model.create(req.body).then(result => {
       result.verifyToken = uid()
       result.save().then(r => {
@@ -63,7 +63,7 @@ export default (r) => {
   })
 
   //重置密码
-  r.post('/user/resetpassword', check(['uid', 'token', 'password']), (req, res) => {
+  r.post('/user/reset/verify', check(['uid', 'token', { key: 'password', match: regex.phone }]), (req, res) => {
     model.findOne({ resetToken: req.body.token }).then(r => {
       if (!r) {
         handler(res, 'token不存在', 4016)
