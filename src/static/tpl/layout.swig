@@ -19,21 +19,7 @@
               <td class="content-wrap">
                 <meta itemprop="name" content="Confirm Email" />
                 <table width="100%" cellpadding="0" cellspacing="0">
-                  <tr>
-                    <td class="content-block">
-                    尊敬的{{email}}:
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="content-block">
-                      请点击下面的链接确认您的电子邮件地址.
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
-                      <a href="{{token}}" class="btn-primary" itemprop="url">确认邮箱地址</a>
-                    </td>
-                  </tr>
+                {%block content%}{% endblock %}
                   <tr>
                     <td class="content-block">
                       &mdash; Youths网

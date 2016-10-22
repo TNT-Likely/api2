@@ -2,7 +2,7 @@ import express from 'express'
 import models from '../../models'
 import { handler } from '../../tools'
 
-export let restRouter = (app) => {
+export default (app) => {
   let router = express.Router()
   let model = null
 
