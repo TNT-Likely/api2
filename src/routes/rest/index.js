@@ -1,10 +1,4 @@
-import express from 'express'
-import models from '../../models'
-import { handler } from '../../tools'
-
-export default (app) => {
-  let router = express.Router()
-  let model = null
+export default (router) => {
 
   //user路由
   require('./user')(router)
