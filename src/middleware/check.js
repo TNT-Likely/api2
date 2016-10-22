@@ -14,9 +14,9 @@ export default (keys) => {
       }
 
       if (!req.body[key]) {
-        handler(res, `缺少入参${key}`, 4200)
+        handler(res, `缺少入参${key}`, 40200)
       } else if (!!match && !match.test(req.body[key])) {
-        handler(res, `入参${key}格式${match}校验失败`, 4201)
+        handler(res, `入参${key}格式${match}校验失败`, 40201)
       }
     })
     next()
