@@ -9,3 +9,6 @@ module.exports.emailsender = require('./email')
 
 //正则表达式
 module.exports.regex = require('./regex')
+
+//文件工具
+module.exports.file = require('./file')
