@@ -1,15 +1,11 @@
 //处理通用性request
-export { handler }
-from './handler'
+module.exports.handler = require('./handler')
 
 //生成唯一标识ID
-export { uid }
-from './uid'
+module.exports.uid = require('./uid')
 
 //邮件发送
-export { emailsender }
-from './email'
+module.exports.emailsender = require('./email')
 
 //正则表达式
-export { regex }
-from './regex'
+module.exports.regex = require('./regex')

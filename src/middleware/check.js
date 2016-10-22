@@ -1,6 +1,6 @@
 import { handler } from '../tools'
 
-export let check = (keys) => {
+export default (keys) => {
   return (req, res, next) => {
     keys.forEach(i => {
       let key = null,

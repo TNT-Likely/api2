@@ -1,5 +1,2 @@
-export { auth }
-from './auth'
-
-export { check }
-from './check'
+module.exports.auth = require('./auth')
+module.exports.check = require('./check')

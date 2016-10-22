@@ -1,4 +1,4 @@
-export let handler = (res, result, code) => {
+export default (res, result, code) => {
     if (!code) {
         res.json({ code: 0, msg: null, data: result })
     } else {

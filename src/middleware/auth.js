@@ -2,7 +2,7 @@ import cookieModel from '../models/cookie'
 import userModel from '../models/user'
 import { handler } from '../tools'
 
-export let auth = (req, res, next) => {
+export default (req, res, next) => {
   let accessToken = req.cookies.accessToken
   if (!accessToken) {
     handler(res, '未登录', 4100)

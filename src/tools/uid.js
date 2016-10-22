@@ -1,5 +1,5 @@
 import uuid from 'uuid'
 
-export let uid = () => {
+export default () => {
   return uuid.v1()
 }

@@ -1,2 +1,1 @@
-export { restRouter }
-from './rest'
+module.exports.rest = require('./rest')

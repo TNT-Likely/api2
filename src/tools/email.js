@@ -62,4 +62,4 @@ class email {
   }
 }
 
-export let emailsender = new email(config.email)
+export default new email(config.email)
