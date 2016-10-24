@@ -34,10 +34,10 @@ export default (r) => {
   }, auth, (req, res) => {
     if (req.file.level == '1') {
       fileTool(res, req.file.name)
-    }
-    if (req.user.id != req.file.uid) {
+    } else if (req.user.id != req.file.uid) {
       handler(res, '无访问权限', 40034)
+    } else {
+      fileTool(res, req.file.name)
     }
-    fileTool(res, req.file.name)
   })
 }
