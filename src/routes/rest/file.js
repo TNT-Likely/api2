@@ -4,33 +4,16 @@ import { handler, file as fileTool } from '../../tools'
 import { auth, check, upload } from '../../middleware'
 
 export default (r) => {
-  //上传单个文件
-  r.post('/file/upload', auth, (req, res) => {
+  //上传单个文件(options{level:安全等级})
+  r.post('/file/upload', auth, upload.single('file'), (req, res) => {
     let entity = {
       uid: req.user.id,
       level: req.body.level || undefined,
-      name: req.body.name || undefined
+      name: req.file.filename || undefined
     }
 
-    let cpupload = upload.single('file')
-
     file.create(entity).then(r => {
-      req.filename = entity.name || r.id
-      cpupload(req, res, er => {
-        if (er) handler(res, er, 40031);
-        else {
-          if (!!req.file && req.file.filename) {
-            r.name = req.file.filename
-            r.save().then(re => {
-              handler(res, { id: r.id })
-            }).catch(err => {
-              handler(res, err, 40032)
-            })
-          } else {
-            handler(res, '请上传有效文件', 40035)
-          }
-        }
-      })
+      handler(res, { id: r.id })
     }).catch(e => {
       handler(res, e, 40030)
     })
