@@ -8,7 +8,6 @@ export default (r) => {
   r.post('/file/upload', auth, (req, res) => {
     let entity = {
       uid: req.user.id,
-      // uid: '5808e2a1eda9fe2240058e08e',
       level: req.body.level || undefined,
       name: req.body.name || undefined
     }
@@ -20,12 +19,16 @@ export default (r) => {
       cpupload(req, res, er => {
         if (er) handler(res, er, 40031);
         else {
-          r.name = req.file.filename
-          r.save().then(re => {
-            handler(res, { id: r.id })
-          }).catch(err => {
-            handler(res, err, 40032)
-          })
+          if (!!req.file && req.file.filename) {
+            r.name = req.file.filename
+            r.save().then(re => {
+              handler(res, { id: r.id })
+            }).catch(err => {
+              handler(res, err, 40032)
+            })
+          } else {
+            handler(res, '请上传有效文件', 40035)
+          }
         }
       })
     }).catch(e => {
