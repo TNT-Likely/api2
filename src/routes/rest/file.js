@@ -22,7 +22,9 @@ export default (r) => {
   //读取文件
   r.get('/file/:id', (req, res, next) => {
     file.findOne({ _id: req.params.id }).then(r => {
-      if (r.level == '0') {
+      if (!r) {
+        handler(res, '文件不存在', 40036)
+      } else if (r.level == '0') {
         fileTool(res, r.name)
       } else {
         req.file = r
