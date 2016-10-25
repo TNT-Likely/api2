@@ -6,7 +6,7 @@ export default (router) => {
 
   router.use('/', (req, res) => {
     let url = req.originalUrl.replace('/nba/', '')
-    f.g(res, url).then(r => {
+    f.send(res, url).then(r => {
       handler(res, r)
     })
   })

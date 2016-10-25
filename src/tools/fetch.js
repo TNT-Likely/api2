@@ -3,16 +3,20 @@ import handler from './handler'
 
 class fetch {
   constructor(host) {
-    this.opts = {
-      url: host,
+    this.host = host
+  }
+
+  send(res, url) {
+    let opts = {
+      url: this.host + url,
       headers: {
         'User-Agent': 'Request-Promise'
       },
       json: true
     }
-  }
 
-  send(res, opts) {
+    console.log(opts)
+
     return new Promise((resolve, reject) => {
       rp(opts).then(r => {
         resolve(r)
@@ -21,12 +25,6 @@ class fetch {
       })
     })
   }
-
-  g(res, url) {
-    this.opts.url += url
-    return this.send(res, this.opts)
-  }
-
 }
 
 export default fetch
