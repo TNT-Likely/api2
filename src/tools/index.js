@@ -12,3 +12,6 @@ module.exports.regex = require('./regex')
 
 //文件工具
 module.exports.file = require('./file')
+
+//fetch
+module.exports.fetch = require('./fetch')
