@@ -20,5 +20,10 @@ export default {
       user: 'admin@youths.cc',
       pass: 'SUNxiao195721'
     }
+  },
+  oss: {
+    region: 'oss-cn-shanghai',
+    accessKeyId: 'LTAItpYmqinO0cvZ',
+    accessKeySecret: 'Bf7VpuelfI3PrkBzePS8xeDbWY506q',
   }
 }

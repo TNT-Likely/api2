@@ -7,5 +7,7 @@ export default () => {
   //rest router 
   router.use(`/${config.restEndpoint}`, require('./rest')(router))
 
+  //oss router
+  router.use(`/oss`, require('./oss')(router))
   return router
 }
