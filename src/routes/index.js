@@ -9,5 +9,9 @@ export default () => {
 
   //nba
   router.use(`/nba`, require('./nba')(router))
+
+  //oss router
+  router.use(`/oss`, require('./oss')(router))
+
   return router
 }

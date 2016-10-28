@@ -15,3 +15,6 @@ module.exports.file = require('./file')
 
 //fetch
 module.exports.fetch = require('./fetch')
+
+//阿里云oss
+module.exports.oss = require('./oss')
