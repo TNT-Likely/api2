@@ -6,7 +6,9 @@ export default {
   modelsFolder: path.join(__dirname, '../models'),
   upload: {
     folder: path.join(__dirname, '../../.tmp'),
-    maxsize: 1024 * 1024
+    maxsize: 1024 * 1024,
+    maxfiles: 3,
+    maxfields: 7
   },
   restEndpoint: 'rest',
   mongo: {
