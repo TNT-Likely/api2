@@ -16,11 +16,12 @@ class ossClient {
     return bson.ObjectId() + path.extname(name)
   }
 
+  //file.data为filestream或buffer
   put(res, file) {
     let objectkey = this.objectkey(file.name)
     let self = this
     co(function*() {
-      var result = yield self.client.put(objectkey, new Buffer(file.data));
+      var result = yield self.client.put(objectkey, file.data);
       handler(res, result)
     }).catch(function(err) {
       handler(res, err, 40600)

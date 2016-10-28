@@ -30,7 +30,6 @@ export default (req, res, next) => {
       data.push(chunk)
     })
     file.on('end', () => {
-      console.log(data)
       if (file.truncated) return; //文件是否超出事件限制标示
       files[fieldname] = { data: Buffer.concat(data), name: filename }
     })
