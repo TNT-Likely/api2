@@ -7,8 +7,8 @@ export default (r) => {
   let client = new oss('youths')
 
   r.post('/upload', upload2, (req, res) => {
-    console.log(req.upload.files)
-    client.put(res, path.join(__dirname, './index.js'))
+    let file = req.upload.files['file']
+    client.put(res, file)
   })
 
   return r
