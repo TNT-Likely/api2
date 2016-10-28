@@ -12,20 +12,15 @@ class ossClient {
     this.client = new oss(this.config)
   }
 
-  fileinfo(filepath) {
-    let file = fs.readFileSync(filepath)
-    let ext = path.extname(filepath)
-    return {
-      objectkey: bson.ObjectId() + ext,
-      file: file
-    }
+  objectkey(name) {
+    return bson.ObjectId() + path.extname(name)
   }
 
-  put(res, filepath) {
-    let file = this.fileinfo(filepath)
+  put(res, file) {
+    let objectkey = this.objectkey(file.name)
     let self = this
     co(function*() {
-      var result = yield self.client.put(file.objectkey, file.file);
+      var result = yield self.client.put(objectkey, file.data);
       handler(res, result)
     }).catch(function(err) {
       handler(res, err, 40600)
