@@ -1,4 +1,5 @@
 import Busboy from 'busboy'
+import fs from 'fs'
 import { handler } from '../tools'
 import config from '../config'
 
@@ -24,10 +25,14 @@ export default (req, res, next) => {
   //文件接受事件
   busboy.on('file', (fieldname, file, filename) => {
     //必备file event,否则无法接受文件
-    file.on('data', (data) => {})
+    let data = []
+    file.on('data', (chunk) => {
+      data.push(chunk)
+    })
     file.on('end', () => {
+      console.log(data)
       if (file.truncated) return; //文件是否超出事件限制标示
-      files[fieldname] = { data: file, name: filename }
+      files[fieldname] = { data: Buffer.concat(data), name: filename }
     })
   })
 
