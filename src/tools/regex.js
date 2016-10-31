@@ -1,3 +1,3 @@
 export default {
-  phone: /^\S{6,16}$/
+  password: /^\S{6,16}$/
 }
