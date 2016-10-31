@@ -18,3 +18,9 @@ module.exports.fetch = require('./fetch')
 
 //阿里云oss
 module.exports.oss = require('./oss')
+
+//验证码
+module.exports.captcha = require('./captcha')
+
+//加密,验证
+module.exports.crypto = require('./crypto')
