@@ -6,7 +6,7 @@ import { auth, check } from '../../middleware'
 export default (r) => {
 
   //注册
-  r.post('/user/register', check(['username', { key: 'password', match: regex.phone }, 'email']), (req, res) => {
+  r.post('/user/register', check(['username', { key: 'password', match: regex.password }, 'email']), (req, res) => {
     user.create(req.body).then(result => {
       result.verifyToken = uid()
       result.save().then(r => {
@@ -68,7 +68,7 @@ export default (r) => {
   })
 
   //重置密码
-  r.post('/user/reset/verify', check(['uid', 'token', { key: 'password', match: regex.phone }]), (req, res) => {
+  r.post('/user/reset/verify', check(['uid', 'token', { key: 'password', match: regex.password }]), (req, res) => {
     user.findOne({ resetToken: req.body.token }).then(r => {
       if (!r) {
         handler(res, 'token不存在', 40016)
