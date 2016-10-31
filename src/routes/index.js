@@ -9,5 +9,9 @@ export default () => {
 
   //oss router
   router.use(`/oss`, require('./oss')(router))
+
+  //captcha router
+  router.use(`/captcha`, require('./captcha')(router))
+  
   return router
 }
