@@ -6,7 +6,9 @@ export default {
   modelsFolder: path.join(__dirname, '../models'),
   upload: {
     folder: '/dsik/upload',
-    maxsize: 1024 * 1024
+    maxsize: 1024 * 1024,
+    maxfiles: 3,
+    maxfields: 7
   },
   restEndpoint: 'rest',
   mongo: {
@@ -20,5 +22,10 @@ export default {
       user: 'youthschina@163.com',
       pass: 'uFS7KIPzmMBfoXk4'
     }
+  },
+  oss: {
+    region: 'oss-cn-shanghai',
+    accessKeyId: 'LTAItpYmqinO0cvZ',
+    accessKeySecret: 'Bf7VpuelfI3PrkBzePS8xeDbWY506q',
   }
 }
