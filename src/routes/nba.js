@@ -4,8 +4,8 @@ let f = new fetch('http://stats.nba.com/')
 
 export default (router) => {
 
-  router.use('/', (req, res) => {
-    let url = req.originalUrl.replace('/nba/', '')
+  router.use('/data', (req, res) => {
+    let url = req.originalUrl.replace('/nba/data', '')
     f.send(res, url).then(r => {
       handler(res, r)
     })
