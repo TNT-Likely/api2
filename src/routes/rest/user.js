@@ -128,4 +128,18 @@ export default (r) => {
   r.get('/user/status', auth, (req, res) => {
     handler(res, req.user)
   })
+
+  //检查用户名、邮箱是否已被使用
+  r.post('/user/exist', check(['key', 'value']), (req, res) => {
+    let key = req.body.key
+    let value = req.body.value
+    let opt = {}
+    opt[key] = value
+    user.findOne(opt).then(r => {
+      if (!r) handler(res, `${key}的值${value}可用`)
+      else handler(res, `${key}的值${value}不可用`, 40052)
+    }).catch(e => {
+      handler(res, e, 40051)
+    })
+  })
 }
