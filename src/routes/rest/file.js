@@ -2,10 +2,13 @@ import fs from 'fs'
 import { user, file } from '../../models'
 import { handler, file as fileTool } from '../../tools'
 import { auth, check, upload } from '../../middleware'
+import express from 'express'
 
-export default (r) => {
+export default () => {
+  let r = express.Router()
+
   //上传单个文件(options{level:安全等级})
-  r.post('/file/upload', auth, upload.single('file'), (req, res) => {
+  r.post('/upload', auth, upload.single('file'), (req, res) => {
     let entity = {
       uid: req.user.id,
       level: req.body.level || undefined,
@@ -20,7 +23,7 @@ export default (r) => {
   })
 
   //读取文件
-  r.get('/file/:id', (req, res, next) => {
+  r.get('/:id', (req, res, next) => {
     file.findOne({ _id: req.params.id }).then(r => {
       if (!r) {
         handler(res, '文件不存在', 40036)
@@ -42,5 +45,6 @@ export default (r) => {
       fileTool(res, req.file.name)
     }
   })
-  
+
+  return r
 }

@@ -4,10 +4,10 @@ export default () => {
   let r = express.Router()
 
   //user路由
-  require('./user')(r)
+  r.use('/user', require('./user')())
 
   //file路由
-  require('./file')(r)
+  r.use('/file', require('./file')())
 
   return r
 }
