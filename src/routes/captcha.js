@@ -2,8 +2,11 @@ import { auth, check, captcha as m_captcha } from '../middleware'
 import { captcha, crypto, handler } from '../tools'
 import Canvas from 'canvas'
 import path from 'path'
+import express from 'express'
 
-export default (r) => {
+export default () => {
+  let r = express.Router()
+
   r.get('/new', (req, res) => {
     let Image = Canvas.Image,
       canvas = new Canvas(100, 40),

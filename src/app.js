@@ -6,7 +6,6 @@ import cookieParser from 'cookie-parser'
 import morgan from 'morgan'
 import mongoose from 'mongoose'
 import config from './config'
-import router from './routes'
 
 mongoose.connect(config.mongo.url)
 mongoose.Promise = global.Promise
@@ -32,7 +31,7 @@ if (process.env.NODE_ENV != 'production') {
 app.use('/static', express.static(config.staticFolder))
 
 //rest router
-app.use('/', router())
+require('./routes')(app)
 
 //catch 404
 app.use((req, res, next) => {
