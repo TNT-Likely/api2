@@ -1,10 +1,13 @@
-export default (router) => {
+import express from 'express'
+
+export default () => {
+  let r = express.Router()
 
   //user路由
-  require('./user')(router)
+  require('./user')(r)
 
   //file路由
-  require('./file')(router)
+  require('./file')(r)
 
-  return router
+  return r
 }

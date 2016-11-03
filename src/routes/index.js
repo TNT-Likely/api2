@@ -1,17 +1,14 @@
-import express from 'express'
 import config from '../config'
 
-export default () => {
-  let router = express.Router()
-
+export default (app) => {
   //rest router 
-  router.use(`/${config.restEndpoint}`, require('./rest')(router))
+  app.use(`/${config.restEndpoint}`, require('./rest')())
 
   //oss router
-  router.use(`/oss`, require('./oss')(router))
+  app.use(`/oss`, require('./oss')())
 
   //captcha router
-  router.use(`/captcha`, require('./captcha')(router))
-  
-  return router
+  app.use(`/captcha`, require('./captcha')())
+
+
 }
