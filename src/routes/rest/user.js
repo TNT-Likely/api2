@@ -98,7 +98,7 @@ export default () => {
       if (!r.emailVerified) {
         handler(res, '邮箱未激活', 40004)
       } else if (bcrypt.compareSync(password, r.password)) {
-        cookie.findOneAndUpdate({ uid: r.id }, { ttl: 0 }).then(resu => { //旧cookie设置过期
+        cookie.findOneAndUpdate({ uid: r.id }, { ttl: 0 }, { sort: { createdAt: 'desc' } }).then(resu => { //旧cookie设置过期
           cookie.create({ uid: r.id }).then(rs => { //生成新cookie
             r._doc.accessToken = rs.accessToken
             handler(res, r._doc)
@@ -119,7 +119,7 @@ export default () => {
 
   //注销
   r.get('/logout', auth, (req, res) => {
-    cookie.findOneAndUpdate({ uid: req.user.id }, { ttl: 0 }).then(r => {
+    cookie.findOneAndUpdate({ uid: req.user.id }, { ttl: 0 }, { sort: { createdAt: 'desc' } }).then(r => {
       handler(res, '注销成功')
     }).catch(e => {
       handler(res, e, 40019)
