@@ -5,7 +5,7 @@ export default (app) => {
   app.use(`/${config.restEndpoint}`, require('./rest')())
 
   //nba
-  router.use(`/nba`, require('./nba')(router))
+  app.use(`/nba`, require('./nba')())
 
   //oss router
   app.use(`/oss`, require('./oss')())
