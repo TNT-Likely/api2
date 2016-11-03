@@ -2,11 +2,13 @@ import { user, cookie } from '../../models'
 import bcrypt from 'bcryptjs'
 import { handler, uid, emailsender, regex } from '../../tools'
 import { auth, check } from '../../middleware'
+import express from 'express'
 
-export default (r) => {
+export default () => {
+  let r = express.Router()
 
   //注册
-  r.post('/user/register', check(['username', { key: 'password', match: regex.password }, 'email']), (req, res) => {
+  r.post('/register', check(['username', { key: 'password', match: regex.password }, 'email']), (req, res) => {
     user.create(req.body).then(result => {
       result.verifyToken = uid()
       result.save().then(r => {
@@ -24,7 +26,7 @@ export default (r) => {
   })
 
   //激活
-  r.post('/user/verify', check(['uid', 'token']), (req, res) => {
+  r.post('/verify', check(['uid', 'token']), (req, res) => {
     user.findOne({ _id: req.body.uid, verifyToken: req.body.token }).then(r => {
       if (!r) {
         handler(res, '无效uid或token', 40010)
@@ -43,7 +45,7 @@ export default (r) => {
   })
 
   //重置邮件
-  r.post('/user/reset', check(['email']), (req, res) => {
+  r.post('/reset', check(['email']), (req, res) => {
     let email = req.body.email
     user.findOne({ email: email }).then(r => {
       if (!r) {
@@ -68,7 +70,7 @@ export default (r) => {
   })
 
   //重置密码
-  r.post('/user/reset/verify', check(['uid', 'token', { key: 'password', match: regex.password }]), (req, res) => {
+  r.post('/reset/verify', check(['uid', 'token', { key: 'password', match: regex.password }]), (req, res) => {
     user.findOne({ resetToken: req.body.token }).then(r => {
       if (!r) {
         handler(res, 'token不存在', 40016)
@@ -87,7 +89,7 @@ export default (r) => {
   })
 
   //登录
-  r.post('/user/login', check(['nameOrEmail', 'password']), (req, res) => {
+  r.post('/login', check(['nameOrEmail', 'password']), (req, res) => {
     let nameOrEmail = req.body.nameOrEmail
     let password = req.body.password
 
@@ -116,7 +118,7 @@ export default (r) => {
   })
 
   //注销
-  r.get('/user/logout', auth, (req, res) => {
+  r.get('/logout', auth, (req, res) => {
     cookie.findOneAndUpdate({ uid: req.user.id }, { ttl: 0 }).then(r => {
       handler(res, '注销成功')
     }).catch(e => {
@@ -125,12 +127,12 @@ export default (r) => {
   })
 
   //用户状态
-  r.get('/user/status', auth, (req, res) => {
+  r.get('/status', auth, (req, res) => {
     handler(res, req.user)
   })
 
   //检查用户名、邮箱是否已被使用
-  r.post('/user/exist', check(['key', 'value']), (req, res) => {
+  r.post('/exist', check(['key', 'value']), (req, res) => {
     let key = req.body.key
     let value = req.body.value
     let opt = {}
@@ -142,4 +144,5 @@ export default (r) => {
       handler(res, e, 40051)
     })
   })
+  return r
 }
