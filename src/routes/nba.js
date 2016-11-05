@@ -2,7 +2,7 @@ import { fetch, handler } from '../tools'
 import express from 'express'
 
 let f = new fetch('http://stats.nba.com/')
-
+ 
 export default () => {
   let r = express.Router()
   r.use('/', (req, res) => {
