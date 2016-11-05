@@ -4,7 +4,7 @@ export default {
   port: 4000,
   staticFolder: path.join(__dirname, '../static'),
   modelsFolder: path.join(__dirname, '../models'),
-  allowHosts: ['http://youths.cc'],
+  allowHosts: ['*'],
   upload: {
     folder: '/dsik/upload',
     maxsize: 1024 * 1024,
