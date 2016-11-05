@@ -4,6 +4,7 @@ export default {
   port: 3030,
   staticFolder: path.join(__dirname, '../static'),
   modelsFolder: path.join(__dirname, '../models'),
+  allowHosts: ['http://localhost:8090'],
   upload: {
     folder: path.join(__dirname, '../../.tmp'),
     maxsize: 1024 * 1024,
