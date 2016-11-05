@@ -18,9 +18,10 @@ export default () => {
     ctx.fillText(text, 10, 35)
     ctx.strokeStyle = 'rgba(0,0,0,0.5)'
 
-    let img = canvas.toBuffer()
-    res.writeHead(200, { 'Content-Type': 'image/png', 'Content-Length': img.length, 'token': crypto.encrypt(text) })
-    res.end(canvas.toBuffer())
+    // let img = canvas.toBuffer()
+    // res.writeHead(200, { 'Content-Type': 'image/png', 'Content-Length': img.length, 'token': crypto.encrypt(text) })
+    // res.end(canvas.toBuffer())
+    handler(res, { data: canvas.toDataURL(), token: crypto.encrypt(text) })
   })
 
   r.post('/validate', check(['captcha', 'token']), m_captcha.validate, (req, res) => {
