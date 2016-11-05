@@ -1,14 +1,14 @@
 import { user, cookie } from '../../models'
 import bcrypt from 'bcryptjs'
 import { handler, uid, emailsender, regex } from '../../tools'
-import { auth, check } from '../../middleware'
+import { auth, check, captcha } from '../../middleware'
 import express from 'express'
 
 export default () => {
   let r = express.Router()
 
   //注册
-  r.post('/register', check(['username', { key: 'password', match: regex.password }, 'email']), (req, res) => {
+  r.post('/register', check(['username', { key: 'password', match: regex.password }, 'email', 'vcode', 'token']), captcha.validate, (req, res) => {
     user.create(req.body).then(result => {
       result.verifyToken = uid()
       result.save().then(r => {
