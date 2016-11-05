@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser'
 import morgan from 'morgan'
 import mongoose from 'mongoose'
 import config from './config'
+import { cors } from './middleware'
 
 mongoose.connect(config.mongo.url)
 mongoose.Promise = global.Promise
@@ -26,6 +27,9 @@ app.use(cookieParser())
 if (process.env.NODE_ENV != 'production') {
   app.use(morgan('dev'))
 }
+
+//cors
+app.use(cors)
 
 //server static file
 app.use('/static', express.static(config.staticFolder))

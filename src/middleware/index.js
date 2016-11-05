@@ -12,3 +12,6 @@ module.exports.upload2 = require('./upload2')
 
 //验证码中间件
 module.exports.captcha = require('./captcha')
+
+//跨域
+module.exports.cors = require('./cors')
