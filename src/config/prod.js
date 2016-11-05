@@ -13,7 +13,7 @@ export default {
   },
   restEndpoint: 'rest',
   mongo: {
-    url: 'mongodb://localhost/youths'
+    url: 'mongodb://admin:admin@localhost/youths'
   },
   email: {
     host: 'smtp.163.com',
