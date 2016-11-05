@@ -3,7 +3,7 @@ import userModel from '../models/user'
 import { handler } from '../tools'
 
 export default (req, res, next) => {
-  let accessToken = req.cookies.accessToken
+  let accessToken = req.cookies.accessToken || req.get('accessToken')
   if (!accessToken) {
     handler(res, '未登录', 40100)
   } else {
