@@ -5,6 +5,10 @@ export default {
   staticFolder: path.join(__dirname, '../static'),
   modelsFolder: path.join(__dirname, '../models'),
   allowHosts: ['*'],
+  user: {
+    verifyUrl: 'http://new.youths.cc/user/verify',
+    resetUrl: 'http://new.youths.cc/user/reset'
+  },
   upload: {
     folder: '/dsik/upload',
     maxsize: 1024 * 1024,

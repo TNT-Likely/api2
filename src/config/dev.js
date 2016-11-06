@@ -5,6 +5,10 @@ export default {
   staticFolder: path.join(__dirname, '../static'),
   modelsFolder: path.join(__dirname, '../models'),
   allowHosts: ['*'],
+  user: {
+    verifyUrl: 'http://localhost:8090/user/verify',
+    resetUrl: 'http://localhost:8090/user/reset'
+  },
   upload: {
     folder: path.join(__dirname, '../../.tmp'),
     maxsize: 1024 * 1024,
