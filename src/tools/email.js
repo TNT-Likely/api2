@@ -46,19 +46,21 @@ class email {
   }
 
   //注册激活邮件
-  verify(email, token) {
+  verify(email, token, uid) {
+    let url = `${config.user.verifyUrl}?uid=${uid}&token=${token}`
     return this.template('../static/tpl/verify', {
       subject: '请激活您的youths网账号',
       to: email
-    }, { email: email, token: token })
+    }, { email: email, url: url })
   }
 
   //重置密码邮件
-  reset(email, token) {
+  reset(email, token, uid) {
+    let url = `${config.user.resetUrl}?uid=${uid}&token=${token}`
     return this.template('../static/tpl/reset', {
       subject: 'youths网重置密码',
       to: email
-    }, { email: email, token: token })
+    }, { email: email, url: url })
   }
 }
 

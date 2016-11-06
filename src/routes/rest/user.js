@@ -12,7 +12,7 @@ export default () => {
     user.create(req.body).then(result => {
       result.verifyToken = uid()
       result.save().then(r => {
-        emailsender.verify(r.email, r.verifyToken).then(result => {
+        emailsender.verify(r.email, r.verifyToken, r.id).then(result => {
           handler(res, r)
         }).catch((err) => {
           handler(res, err, 40000)
@@ -55,7 +55,7 @@ export default () => {
       } else {
         r.resetToken = uid()
         r.save().then(re => {
-          emailsender.reset(email, re.resetToken).then((resu) => {
+          emailsender.reset(email, re.resetToken, r.id).then((resu) => {
             handler(res, '激活邮件发送成功')
           }).catch(err => {
             handler(res, err, 40014)
