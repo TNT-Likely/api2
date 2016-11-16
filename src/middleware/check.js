@@ -1,8 +1,8 @@
 import { handler } from '../tools'
 
 export default (keys) => {
-  let end = null
   return (req, res, next) => {
+    let end = null
     keys.forEach((i, index) => {
       if (end) return; //结束遍历
       let key = null,
