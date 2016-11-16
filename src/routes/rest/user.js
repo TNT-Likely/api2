@@ -45,9 +45,9 @@ export default () => {
   })
 
   //重置邮件
-  r.post('/reset', check(['email']), (req, res) => {
-    let email = req.body.email
-    user.findOne({ email: email }).then(r => {
+  r.post('/reset', check(['nameOrEmail', 'vcode', 'token']), captcha.validate, (req, res) => {
+    let nameOrEmail = req.body.nameOrEmail
+    user.findOne().or([{ username: nameOrEmail }, { email: nameOrEmail }]).then(r => {
       if (!r) {
         handler(res, '用户不存在', 40003)
       } else if (!r.emailVerified) {
@@ -55,7 +55,7 @@ export default () => {
       } else {
         r.resetToken = uid()
         r.save().then(re => {
-          emailsender.reset(email, re.resetToken, r.id).then((resu) => {
+          emailsender.reset(r.email, re.resetToken, r.id).then((resu) => {
             handler(res, '激活邮件发送成功')
           }).catch(err => {
             handler(res, err, 40014)

@@ -20,12 +20,12 @@ export default {
     url: 'mongodb://localhost/youths'
   },
   email: {
-    host: 'smtp.exmail.qq.com',
+    host: 'smtp.163.com',
     port: 465,
     secure: true,
     auth: {
-      user: 'admin@youths.cc',
-      pass: 'SUNxiao195721'
+      user: 'youthschina@163.com',
+      pass: 'uFS7KIPzmMBfoXk4'
     }
   },
   oss: {
