@@ -23,6 +23,8 @@ let Schema = new mongoose.Schema({
   verifyToken: String,
   //重置密码token
   resetToken: String,
+  //可用金额
+  amount: { type: Number, default: 0.00 },
   avatar: String
 }, { versionKey: '', timestamps: {} })
 

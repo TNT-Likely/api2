@@ -20,7 +20,8 @@ export default (req, res, next) => {
           username: r.uid.username,
           email: r.uid.email,
           phone: r.uid.phone,
-          emailVerified: r.uid.emailVerified
+          emailVerified: r.uid.emailVerified,
+          amount: r.uid.amount
         }
         next()
       }
