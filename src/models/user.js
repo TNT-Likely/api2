@@ -1,6 +1,5 @@
 import mongoose from 'mongoose'
-import bcrypt from 'bcryptjs'
-import { uid } from '../tools'
+import { uid, crypto } from '../tools'
 
 let Schema = new mongoose.Schema({
   username: { type: String, required: true, max: 20, unique: true },
@@ -29,7 +28,7 @@ let Schema = new mongoose.Schema({
 
 //密码存入之前要加密
 Schema.post('save', (m, next) => {
-  m.password = bcrypt.hashSync(m.password, 10)
+  m.password = crypto.encrypt(m.password, 10)
   next()
 })
 
