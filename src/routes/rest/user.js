@@ -1,6 +1,5 @@
 import { user, cookie } from '../../models'
-import bcrypt from 'bcryptjs'
-import { handler, uid, emailsender, regex } from '../../tools'
+import { handler, uid, emailsender, regex, crypto } from '../../tools'
 import { auth, check, captcha } from '../../middleware'
 import express from 'express'
 
@@ -71,13 +70,13 @@ export default () => {
 
   //重置密码
   r.post('/reset/verify', check(['uid', 'token', { key: 'password', match: regex.password }]), (req, res) => {
-    user.findOne({ resetToken: req.body.token }).then(r => {
+    user.findOne({ _id: req.body.uid, resetToken: req.body.token }).then(r => {
       if (!r) {
-        handler(res, 'token不存在', 40016)
-      } else if (r.id != req.body.uid) {
-        handler(res, 'token无效', 40017)
+        handler(res, '无效uid或token', 40016)
       } else {
-        user.update({ password: req.body.password }).then(r => {
+        r.password = crypto.encrypt(req.body.password)
+        r.resetToken = undefined
+        r.save().then(r => {
           handler(res, '更新成功')
         }).catch(e => {
           handler(res, '更新密码失败', 40018)
@@ -97,7 +96,7 @@ export default () => {
       if (!r) handler(res, '用户不存在', 40003)
       if (!r.emailVerified) {
         handler(res, '邮箱未激活', 40004)
-      } else if (bcrypt.compareSync(password, r.password)) {
+      } else if (crypto.validate(password, r.password)) {
         cookie.findOneAndUpdate({ uid: r.id }, { ttl: 0 }, { sort: { createdAt: 'desc' } }).then(resu => { //旧cookie设置过期
           cookie.create({ uid: r.id }).then(rs => { //生成新cookie
             r._doc.accessToken = rs.accessToken
